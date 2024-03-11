@@ -7,6 +7,7 @@ public class BoardManager : MonoBehaviour
 {
     bool isDictionaryFilled;
     Dictionary<Vector2Int, BoardObject> boardDataDictionary;
+    List<Vector2Int> neighbourDirectionList;
 
     [SerializeField] Transform boardParentObject;
 
@@ -15,6 +16,29 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         FillBoardDataDictionary(boardParentObject);
+        FillNeighbourDirectionList();
+
+        IsNeighbour(new Vector2Int(3, 2), new Vector2Int(2, 2));
+        IsNeighbour(new Vector2Int(4, 2), new Vector2Int(2, 2));
+        IsNeighbour(new Vector2Int(1, 3), new Vector2Int(2, 2));
+        IsNeighbour(new Vector2Int(2, 0), new Vector2Int(0, 0));
+        IsNeighbour(new Vector2Int(-1, 0), new Vector2Int(0, 0));
+        IsNeighbour(new Vector2Int(1, 1), new Vector2Int(0, 0));
+    }
+
+    void FillNeighbourDirectionList()
+    {
+        neighbourDirectionList = new List<Vector2Int>
+        {
+            new Vector2Int(0, 1),
+            new Vector2Int(0, -1),
+            new Vector2Int(1, 0),
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(-1, 1),
+            new Vector2Int(-1, -1)
+        };
     }
 
     void FillBoardDataDictionary(Transform boardParentObject)
@@ -59,7 +83,16 @@ public class BoardManager : MonoBehaviour
     // checks if two board objects are neighbour
     public bool IsNeighbour(Vector2Int toBeAddedPosition, Vector2Int lastObjectPosition)
     {
+        for(int i = 0; i < neighbourDirectionList.Count; i++)
+        {
+            Vector2Int newPosition = lastObjectPosition + neighbourDirectionList[i];
 
-        return true;
+            if(newPosition.x < 0 || newPosition.y < 0) continue;
+
+            if (newPosition == toBeAddedPosition)
+                return true;
+        }
+
+        return false;
     }
 }

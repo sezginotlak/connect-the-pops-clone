@@ -8,14 +8,21 @@ public class LinkManager : MonoBehaviour
     [Inject]
     InputManager inputManager;
 
+    [Inject]
+    BoardManager boardManager;
+
     List<AbstractBaseNumberObject> numberObjectList = new List<AbstractBaseNumberObject>();
+    List<BoardObject> boardObjectList = new List<BoardObject>();
 
-    void AddNumberToQueue(AbstractBaseNumberObject numberObject)
+    void AddNumberToList(BoardObject boardObject)
     {
-        if (numberObjectList.Contains(numberObject)) return;
+        if (boardManager.IsNeighbour(boardObject.boardPosition, boardObjectList[^1].boardPosition)) return;
 
-        if (numberObjectList[^1].Value != numberObject.Value) return;
+        if (numberObjectList.Contains(boardObject.NumberObject)) return;
 
-        numberObjectList.Add(numberObject);
+        if (numberObjectList.Count > 0 && numberObjectList[^1].Value != boardObject.NumberObject.Value) return;
+
+        boardObjectList.Add(boardObject);
+        numberObjectList.Add(boardObject.NumberObject);
     }
 }
