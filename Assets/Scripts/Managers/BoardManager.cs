@@ -17,13 +17,6 @@ public class BoardManager : MonoBehaviour
     {
         FillBoardDataDictionary(boardParentObject);
         FillNeighbourDirectionList();
-
-        IsNeighbour(new Vector2Int(3, 2), new Vector2Int(2, 2));
-        IsNeighbour(new Vector2Int(4, 2), new Vector2Int(2, 2));
-        IsNeighbour(new Vector2Int(1, 3), new Vector2Int(2, 2));
-        IsNeighbour(new Vector2Int(2, 0), new Vector2Int(0, 0));
-        IsNeighbour(new Vector2Int(-1, 0), new Vector2Int(0, 0));
-        IsNeighbour(new Vector2Int(1, 1), new Vector2Int(0, 0));
     }
 
     void FillNeighbourDirectionList()
@@ -90,9 +83,13 @@ public class BoardManager : MonoBehaviour
             if(newPosition.x < 0 || newPosition.y < 0) continue;
 
             if (newPosition == toBeAddedPosition)
+            {
+                Debug.Log(toBeAddedPosition + " is neighbour with " + lastObjectPosition);
                 return true;
+            }
         }
 
+        Debug.Log(toBeAddedPosition + " is not neighbour with " + lastObjectPosition);
         return false;
     }
 }

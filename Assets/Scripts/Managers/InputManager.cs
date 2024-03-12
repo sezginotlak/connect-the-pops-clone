@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    bool IsPressStarted()
+    public bool IsPressStarted()
     {
         return Input.GetMouseButtonDown(0);
     }
 
-    bool IsPressing()
+    public bool IsPressing()
     {
         return Input.GetMouseButton(0);
     }
 
-    bool IsPressFinished()
+    public bool IsPressFinished()
     {
         return Input.GetMouseButtonUp(0);
+    }
+
+    public Vector3 GetMousePosition()
+    {
+        return Input.mousePosition;
     }
 }

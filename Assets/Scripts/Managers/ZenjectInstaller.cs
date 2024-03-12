@@ -10,10 +10,13 @@ public class ZenjectInstaller : MonoInstaller
     BoardManager boardManager;
     [SerializeField]
     BoardGeneratingManager boardGeneratingManager;
+    [SerializeField]
+    InputManager inputManager;
 
     public override void InstallBindings()
     {
         Container.Bind<BoardManager>().FromComponentOn(boardManager.gameObject).AsSingle();
         Container.Bind<BoardGeneratingManager>().FromComponentOn(boardGeneratingManager.gameObject).AsSingle();
+        Container.Bind<InputManager>().FromComponentOn(inputManager.gameObject).AsSingle();
     }
 }
