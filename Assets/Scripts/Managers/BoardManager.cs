@@ -84,12 +84,10 @@ public class BoardManager : MonoBehaviour
 
             if (newPosition == toBeAddedPosition)
             {
-                Debug.Log(toBeAddedPosition + " is neighbour with " + lastObjectPosition);
                 return true;
             }
         }
 
-        Debug.Log(toBeAddedPosition + " is not neighbour with " + lastObjectPosition);
         return false;
     }
 }

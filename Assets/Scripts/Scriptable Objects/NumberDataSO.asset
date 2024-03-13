@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8a8ec0db61f8047b059eac833d68da, type: 3}
+  m_Name: NumberDataSO
+  m_EditorClassIdentifier: 
+  numberDataList:
+  - minValue: 2
+    maxValue: 4
+    prefab: {fileID: 1088509595981817587, guid: bcaa079d02b33ee44b8fb7c136570b71, type: 3}
+    isOpen: 1
+  - minValue: 4
+    maxValue: 8
+    prefab: {fileID: 926437695003429079, guid: b25b5d28923336e4783d318a84d16c28, type: 3}
+    isOpen: 1
+  - minValue: 8
+    maxValue: 16
+    prefab: {fileID: 1094153618053750487, guid: 1c0464cf9d4be7142b687bec2cbd620f, type: 3}
+    isOpen: 0
+  - minValue: 16
+    maxValue: 32
+    prefab: {fileID: 2228384285831605754, guid: 51b04af38f7273d408d948db82af5fa1, type: 3}
+    isOpen: 0

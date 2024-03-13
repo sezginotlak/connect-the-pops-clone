@@ -1,15 +1,25 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
 public class LinkManager : MonoBehaviour
 {
+    #region InjectRegion
     [Inject]
     InputManager inputManager;
 
     [Inject]
     BoardManager boardManager;
+
+    [Inject]
+    NumberDataHolder numberDataHolder;
+
+    [Inject]
+    LineRendererManager lineRendererManager;
+    #endregion
 
     List<AbstractBaseNumberObject> numberObjectList = new List<AbstractBaseNumberObject>();
     List<BoardObject> boardObjectList = new List<BoardObject>();
@@ -20,15 +30,16 @@ public class LinkManager : MonoBehaviour
     {
         if (inputManager.IsPressing())
             Link();
+
+        if (inputManager.IsPressFinished())
+            Merge();
     }
 
     void AddNumberToList(BoardObject boardObject)
     {
         if (numberObjectList.Count > 0 && numberObjectList[^1].Value != boardObject.NumberObject.Value) return;
 
-        //Debug.Log("Döndü 29'dan " + boardObject, boardObject);
-        Debug.Log("Count: " + boardObjectList.Count);
-        if (boardObjectList.Count > 0 && !boardManager.IsNeighbour(boardObject.boardPosition, boardObjectList[^1].boardPosition));
+        if (boardObjectList.Count > 0 && !boardManager.IsNeighbour(boardObject.boardPosition, boardObjectList[^1].boardPosition)) return;
 
         boardObjectList.Add(boardObject);
         numberObjectList.Add(boardObject.NumberObject);
@@ -42,6 +53,7 @@ public class LinkManager : MonoBehaviour
         numberObjectList.Remove(numberObjectList[^1]);
     }
 
+    // decides if number is gonna be added or removed
     void HandleNumberOperation(BoardObject boardObject)
     {
         if (boardObject == null) return;
@@ -69,8 +81,36 @@ public class LinkManager : MonoBehaviour
         HandleNumberOperation(boardObject);
     }
 
-    bool IsPowerOfTwo(int number)
+    void Merge()
     {
-        return number != 0 && ((number & (number - 1)) == 0);
+        if (numberObjectList.Count < 2) return;
+
+        StartCoroutine(IEMerge());
+    }
+    
+    IEnumerator IEMerge()
+    {
+        int total = numberObjectList.Count * numberObjectList[^1].Value;
+        List<NumberData> list = numberDataHolder.numberDatas.numberDataList;
+        NumberData numberData = list.Where(data => total >= data.minValue && total < data.maxValue).FirstOrDefault();
+        AbstractBaseNumberObject prefab = numberData.prefab;
+
+        BoardObject parentBoardObject = boardObjectList[^1];
+
+        foreach(AbstractBaseNumberObject number in numberObjectList)
+        {
+            number.PlayNumberObjectAnimation(parentBoardObject.transform, 0.1f);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        numberObjectList.Clear();
+        boardObjectList.Clear();
+
+        AbstractBaseNumberObject instantiated = Instantiate(prefab);
+        instantiated.transform.parent = parentBoardObject.transform;
+        instantiated.transform.localPosition = Vector3.zero;
+        instantiated.transform.DOPunchScale(instantiated.transform.localScale * 0.05f, 0.1f);
+        parentBoardObject.NumberObject = instantiated;
     }
 }

@@ -7,10 +7,16 @@ public abstract class AbstractBaseNumberObject : MonoBehaviour
 {
     [SerializeField] int value;
     public int Value { get => value; }
+    public Color Color { get; set; }
+
+    private void Start()
+    {
+        Color = GetComponent<SpriteRenderer>().color;    
+    }
 
     // moves the number object to merge point
     public void PlayNumberObjectAnimation(Transform targetPoint, float duration)
     {
-        transform.DOMove(targetPoint.position, duration);
+        transform.DOMove(targetPoint.position, duration).OnComplete(() => Destroy(gameObject));
     }
 }
