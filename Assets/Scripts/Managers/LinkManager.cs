@@ -24,8 +24,6 @@ public class LinkManager : MonoBehaviour
     List<AbstractBaseNumberObject> numberObjectList = new List<AbstractBaseNumberObject>();
     List<BoardObject> boardObjectList = new List<BoardObject>();
 
-    [SerializeField] LayerMask hitLayer;
-
     private void Update()
     {
         if (inputManager.IsPressing())
@@ -43,6 +41,7 @@ public class LinkManager : MonoBehaviour
 
         boardObjectList.Add(boardObject);
         numberObjectList.Add(boardObject.NumberObject);
+        lineRendererManager.AddPoint(boardObject.transform.position, boardObject.NumberObject.Color);
     }
 
     void RemoveNumberFromList(BoardObject boardObject)
@@ -51,6 +50,7 @@ public class LinkManager : MonoBehaviour
 
         boardObjectList.Remove(boardObjectList[^1]);
         numberObjectList.Remove(numberObjectList[^1]);
+        lineRendererManager.RemovePoint();
     }
 
     // decides if number is gonna be added or removed
@@ -90,6 +90,8 @@ public class LinkManager : MonoBehaviour
     
     IEnumerator IEMerge()
     {
+        lineRendererManager.ClearAllPoints();
+
         int total = numberObjectList.Count * numberObjectList[^1].Value;
         List<NumberData> list = numberDataHolder.numberDatas.numberDataList;
         NumberData numberData = list.Where(data => total >= data.minValue && total < data.maxValue).FirstOrDefault();
@@ -100,6 +102,11 @@ public class LinkManager : MonoBehaviour
         foreach(AbstractBaseNumberObject number in numberObjectList)
         {
             number.PlayNumberObjectAnimation(parentBoardObject.transform, 0.1f);
+        }
+
+        foreach(BoardObject boardObject in boardObjectList)
+        {
+            boardObject.NumberObject = null;
         }
 
         yield return new WaitForSeconds(0.1f);

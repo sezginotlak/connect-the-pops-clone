@@ -23,5 +23,6 @@ public class ZenjectInstaller : MonoInstaller
         Container.Bind<BoardGeneratingManager>().FromComponentOn(boardGeneratingManager.gameObject).AsSingle();
         Container.Bind<InputManager>().FromComponentOn(inputManager.gameObject).AsSingle();
         Container.Bind<NumberDataHolder>().FromComponentOn(numberDataHolder.gameObject).AsSingle();
+        Container.Bind<LineRendererManager>().FromComponentOn(lineRendererManager.gameObject).AsSingle();
     }
 }
