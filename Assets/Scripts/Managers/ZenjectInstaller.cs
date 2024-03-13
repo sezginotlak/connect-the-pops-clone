@@ -16,6 +16,10 @@ public class ZenjectInstaller : MonoInstaller
     NumberDataHolder numberDataHolder;
     [SerializeField]
     LineRendererManager lineRendererManager;
+    [SerializeField]
+    DropManager dropManager;
+    [SerializeField]
+    LinkManager linkManager;
 
     public override void InstallBindings()
     {
@@ -24,5 +28,7 @@ public class ZenjectInstaller : MonoInstaller
         Container.Bind<InputManager>().FromComponentOn(inputManager.gameObject).AsSingle();
         Container.Bind<NumberDataHolder>().FromComponentOn(numberDataHolder.gameObject).AsSingle();
         Container.Bind<LineRendererManager>().FromComponentOn(lineRendererManager.gameObject).AsSingle();
+        Container.Bind<DropManager>().FromComponentOn(dropManager.gameObject).AsSingle();
+        Container.Bind<LinkManager>().FromComponentOn(linkManager.gameObject).AsSingle();
     }
 }

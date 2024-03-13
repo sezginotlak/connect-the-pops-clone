@@ -90,4 +90,9 @@ public class BoardManager : MonoBehaviour
 
         return false;
     }
+
+    public Dictionary<Vector2Int, BoardObject> GetBoardDataDictionary()
+    {
+        return boardDataDictionary;
+    }
 }

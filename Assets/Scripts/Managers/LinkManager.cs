@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ public class LinkManager : MonoBehaviour
 
     List<AbstractBaseNumberObject> numberObjectList = new List<AbstractBaseNumberObject>();
     List<BoardObject> boardObjectList = new List<BoardObject>();
+
+    public Action<Dictionary<Vector2Int, BoardObject>> onMergeFinished;
 
     private void Update()
     {
@@ -119,5 +122,6 @@ public class LinkManager : MonoBehaviour
         instantiated.transform.localPosition = Vector3.zero;
         instantiated.transform.DOPunchScale(instantiated.transform.localScale * 0.05f, 0.1f);
         parentBoardObject.NumberObject = instantiated;
+        onMergeFinished?.Invoke(boardManager.GetBoardDataDictionary());
     }
 }

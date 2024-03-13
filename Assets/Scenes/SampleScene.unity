@@ -308,6 +308,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1866165362384345258, guid: 77bd61e442538c74dab6564c0c7cb984, type: 3}
   m_PrefabInstance: {fileID: 228603673}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &241263762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 241263764}
+  - component: {fileID: 241263763}
+  m_Layer: 0
+  m_Name: DropManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &241263763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241263762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3d105b96131f54db5d37417135910d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &241263764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241263762}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1227867376}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &361253401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1710,6 +1754,7 @@ Transform:
   - {fileID: 1809914538}
   - {fileID: 2043404946}
   - {fileID: 1862649025}
+  - {fileID: 241263764}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1827,11 +1872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7954b994ccf78bb42b79e5c578f43f72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberPrefabList:
-  - {fileID: 1088509595981817587, guid: bcaa079d02b33ee44b8fb7c136570b71, type: 3}
-  - {fileID: 926437695003429079, guid: b25b5d28923336e4783d318a84d16c28, type: 3}
-  - {fileID: 1094153618053750487, guid: 1c0464cf9d4be7142b687bec2cbd620f, type: 3}
-  - {fileID: 2228384285831605754, guid: 51b04af38f7273d408d948db82af5fa1, type: 3}
 --- !u!1001 &1423113552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2632,6 +2672,8 @@ MonoBehaviour:
   inputManager: {fileID: 1708388302}
   numberDataHolder: {fileID: 2043404947}
   lineRendererManager: {fileID: 1862649023}
+  dropManager: {fileID: 241263763}
+  linkManager: {fileID: 1809914539}
 --- !u!1001 &2141314292
 PrefabInstance:
   m_ObjectHideFlags: 0

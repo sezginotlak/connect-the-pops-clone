@@ -15,8 +15,12 @@ public abstract class AbstractBaseNumberObject : MonoBehaviour
     }
 
     // moves the number object to merge point
-    public void PlayNumberObjectAnimation(Transform targetPoint, float duration)
+    public void PlayNumberObjectAnimation(Transform targetPoint, float duration, bool shouldDestroy = true)
     {
-        transform.DOMove(targetPoint.position, duration).OnComplete(() => Destroy(gameObject));
+        transform.DOMove(targetPoint.position, duration).OnComplete(() => 
+        {
+            if (shouldDestroy) 
+                Destroy(gameObject);
+        });
     }
 }
