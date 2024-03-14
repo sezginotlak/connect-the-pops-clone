@@ -25,6 +25,10 @@ public class LinkManager : MonoBehaviour
     List<AbstractBaseNumberObject> numberObjectList = new List<AbstractBaseNumberObject>();
     List<BoardObject> boardObjectList = new List<BoardObject>();
 
+    [SerializeField]
+    Transform mergePreviewParent;
+    AbstractBaseNumberObject instantiatedPreview;
+
     public Action<Dictionary<Vector2Int, BoardObject>> onMergeFinished;
 
     private void Update()
@@ -33,7 +37,11 @@ public class LinkManager : MonoBehaviour
             Link();
 
         if (inputManager.IsPressFinished())
+        {
             Merge();
+            DestroyMergePreview();
+            lineRendererManager.ClearAllPoints();
+        }
     }
 
     void AddNumberToList(BoardObject boardObject)
@@ -56,6 +64,12 @@ public class LinkManager : MonoBehaviour
         lineRendererManager.RemovePoint();
     }
 
+    void ClearLists()
+    {
+        boardObjectList.Clear();
+        numberObjectList.Clear();
+    }
+
     // decides if number is gonna be added or removed
     void HandleNumberOperation(BoardObject boardObject)
     {
@@ -71,6 +85,8 @@ public class LinkManager : MonoBehaviour
         {
             RemoveNumberFromList(boardObject);
         }
+
+        AdjustMergePreview();
     }
 
     void Link()
@@ -86,25 +102,27 @@ public class LinkManager : MonoBehaviour
 
     void Merge()
     {
-        if (numberObjectList.Count < 2) return;
+        if (numberObjectList.Count < 2)
+        {
+            ClearLists();
+            return;
+        }
 
         StartCoroutine(IEMerge());
     }
     
     IEnumerator IEMerge()
     {
-        lineRendererManager.ClearAllPoints();
+        AbstractBaseNumberObject prefab = GetPrefabWillInstantiated();
 
-        int total = numberObjectList.Count * numberObjectList[^1].Value;
-        List<NumberData> list = numberDataHolder.numberDatas.numberDataList;
-        NumberData numberData = list.Where(data => total >= data.minValue && total < data.maxValue).FirstOrDefault();
-        AbstractBaseNumberObject prefab = numberData.prefab;
+        if (prefab == null) 
+            yield break;
 
         BoardObject parentBoardObject = boardObjectList[^1];
 
         foreach(AbstractBaseNumberObject number in numberObjectList)
         {
-            number.PlayNumberObjectAnimation(parentBoardObject.transform, 0.1f);
+            number.PlayNumberObjectAnimation(parentBoardObject.transform, 0.2f);
         }
 
         foreach(BoardObject boardObject in boardObjectList)
@@ -112,10 +130,9 @@ public class LinkManager : MonoBehaviour
             boardObject.NumberObject = null;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
 
-        numberObjectList.Clear();
-        boardObjectList.Clear();
+        ClearLists();
 
         AbstractBaseNumberObject instantiated = Instantiate(prefab);
         instantiated.transform.parent = parentBoardObject.transform;
@@ -123,5 +140,43 @@ public class LinkManager : MonoBehaviour
         instantiated.transform.DOPunchScale(instantiated.transform.localScale * 0.05f, 0.1f);
         parentBoardObject.NumberObject = instantiated;
         onMergeFinished?.Invoke(boardManager.GetBoardDataDictionary());
+    }
+
+    AbstractBaseNumberObject GetPrefabWillInstantiated()
+    {
+        int total = numberObjectList.Count * numberObjectList[^1].Value;
+        List<NumberData> list = numberDataHolder.numberDatas.numberDataList;
+
+        if (total >= list[^1].maxValue) 
+            return null;
+
+        NumberData numberData = list.Where(data => total >= data.minValue && total < data.maxValue).FirstOrDefault();
+        return numberData.prefab;
+    }
+
+    void AdjustMergePreview()
+    {
+        AbstractBaseNumberObject mergePreview = GetPrefabWillInstantiated();
+
+        if (mergePreview == null)
+            return;
+
+        if (instantiatedPreview != null)
+            DestroyMergePreview();
+
+        instantiatedPreview = Instantiate(mergePreview);
+
+        instantiatedPreview.transform.parent = mergePreviewParent.transform;
+        instantiatedPreview.transform.localScale = Vector3.one;
+        instantiatedPreview.transform.localPosition = Vector3.zero;
+    }
+
+    void DestroyMergePreview()
+    {
+        if (instantiatedPreview != null)
+        {
+            Destroy(instantiatedPreview.gameObject);
+            instantiatedPreview = null;
+        }
     }
 }

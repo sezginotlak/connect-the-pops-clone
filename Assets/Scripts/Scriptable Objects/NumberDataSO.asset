@@ -24,8 +24,40 @@ MonoBehaviour:
   - minValue: 8
     maxValue: 16
     prefab: {fileID: 1094153618053750487, guid: 1c0464cf9d4be7142b687bec2cbd620f, type: 3}
-    isOpen: 0
+    isOpen: 1
   - minValue: 16
     maxValue: 32
     prefab: {fileID: 2228384285831605754, guid: 51b04af38f7273d408d948db82af5fa1, type: 3}
+    isOpen: 1
+  - minValue: 32
+    maxValue: 64
+    prefab: {fileID: 2466287599621791245, guid: 0e7012f9922f3ff48a4eb85ab220a70d, type: 3}
+    isOpen: 1
+  - minValue: 64
+    maxValue: 128
+    prefab: {fileID: -6606456737707911403, guid: 373eda549b7239341b591dfd3046e532, type: 3}
+    isOpen: 1
+  - minValue: 128
+    maxValue: 256
+    prefab: {fileID: 3496583077351573548, guid: c74b795294337bc4c8bed405e93aba29, type: 3}
+    isOpen: 0
+  - minValue: 256
+    maxValue: 512
+    prefab: {fileID: 9183793782244503060, guid: fe5e81c4120c7ee4488f9dad16811dab, type: 3}
+    isOpen: 0
+  - minValue: 512
+    maxValue: 1024
+    prefab: {fileID: 8362586463895305005, guid: f4db991a16a0e6947802b1df606b6441, type: 3}
+    isOpen: 0
+  - minValue: 1024
+    maxValue: 2048
+    prefab: {fileID: 6041913220223585658, guid: 433bc7c3438693c4a88450261a2d5403, type: 3}
+    isOpen: 0
+  - minValue: 2048
+    maxValue: 4096
+    prefab: {fileID: -5937286759212361318, guid: cf7664af193d1b24480fcae037a51851, type: 3}
+    isOpen: 0
+  - minValue: 4096
+    maxValue: 8192
+    prefab: {fileID: 547897651143756541, guid: 1869301b570025047b9f359ef2b65a47, type: 3}
     isOpen: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EightNumberObject : AbstractBaseNumberObject
+public class Number8 : AbstractBaseNumberObject
 {
 
 }

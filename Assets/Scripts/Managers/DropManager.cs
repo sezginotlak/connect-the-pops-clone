@@ -34,7 +34,7 @@ public class DropManager : MonoBehaviour
 
                     if (nextBoardObject.NumberObject == null) continue;
 
-                    nextBoardObject.NumberObject.PlayNumberObjectAnimation(currentBoardObject.transform, 0.1f, false);
+                    nextBoardObject.NumberObject.PlayNumberObjectAnimation(currentBoardObject.transform, 0.15f, false);
                     nextBoardObject.NumberObject.transform.parent = currentBoardObject.transform;
                     currentBoardObject.NumberObject = nextBoardObject.NumberObject;
                     nextBoardObject.NumberObject = null;

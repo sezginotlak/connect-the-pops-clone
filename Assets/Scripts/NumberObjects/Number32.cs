@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwoNumberObject : AbstractBaseNumberObject
+public class Number32 : AbstractBaseNumberObject
 {
 
 }

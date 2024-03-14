@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -29,17 +30,15 @@ public class BoardGeneratingManager : MonoBehaviour
         {
             if (boardObjectPair.Value.NumberObject != null) continue;
 
-            Debug.Log("Deneme");
-
             BoardObject boardObject = boardObjectPair.Value;
-            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList;
+            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.isOpen).ToList();
             AbstractBaseNumberObject createdNumberObject = Instantiate(numberDataList[Random.Range(0, numberDataList.Count)].prefab);
 
             createdNumberObject.transform.parent = boardObject.transform;
             Vector3 localScale = createdNumberObject.transform.localScale;
             createdNumberObject.transform.localPosition = Vector3.zero;
             createdNumberObject.transform.localScale = Vector3.zero;
-            createdNumberObject.transform.DOScale(localScale, 0.1f);
+            createdNumberObject.transform.DOScale(localScale, 0.3f);
             boardObject.NumberObject = createdNumberObject;
         }
     }
@@ -49,8 +48,7 @@ public class BoardGeneratingManager : MonoBehaviour
         foreach (var boardObjectPair in boardObjectDict)
         {
             BoardObject boardObject = boardObjectPair.Value;
-
-            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList;
+            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.isOpen).ToList();
             AbstractBaseNumberObject createdNumberObject = Instantiate(numberDataList[Random.Range(0, numberDataList.Count)].prefab);
 
             createdNumberObject.transform.parent = boardObject.transform;
