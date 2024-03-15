@@ -122,7 +122,7 @@ public class LinkManager : MonoBehaviour
 
         foreach(AbstractBaseNumberObject number in numberObjectList)
         {
-            number.PlayNumberObjectAnimation(parentBoardObject.transform, 0.2f);
+            number.PlayMergeAnimation(parentBoardObject.transform, 0.2f);
         }
 
         foreach(BoardObject boardObject in boardObjectList)

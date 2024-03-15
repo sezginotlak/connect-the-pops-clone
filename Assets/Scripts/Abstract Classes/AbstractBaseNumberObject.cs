@@ -23,16 +23,25 @@ public abstract class AbstractBaseNumberObject : MonoBehaviour
     }
 
     // moves the number object to target point
-    public void PlayNumberObjectAnimation(Transform targetPoint, float duration, bool shouldDestroy = true)
+    public void PlayMergeAnimation(Transform targetPoint, float duration)
     {
         transform.DOMove(targetPoint.position, duration).OnComplete(() => 
         {
-            // shouldDestroy decides if it is dropped or merged, if merged then destroys otherwise plays drop animation
-            if (shouldDestroy)
-                Destroy(gameObject);
-            else
-                PlaySquishAnimation(0.25f);
+            Destroy(gameObject);
         });
+    }
+
+    public void PlayDropAnimation(Transform targetPoint, float duration)
+    {
+        transform.DOMove(targetPoint.position, duration).OnComplete(() =>
+        {
+            PlaySquishAnimation(0.25f);
+        });
+    }
+
+    public void PlayMovementAnimation(Transform targetPoint, float duration)
+    {
+        transform.DOMove(targetPoint.position, duration);
     }
 
     public void PlaySquishAnimation(float duration)

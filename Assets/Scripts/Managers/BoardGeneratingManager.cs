@@ -31,7 +31,7 @@ public class BoardGeneratingManager : MonoBehaviour
             if (boardObjectPair.Value.NumberObject != null) continue;
 
             BoardObject boardObject = boardObjectPair.Value;
-            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.isOpen).ToList();
+            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.canBeCreated).ToList();
             AbstractBaseNumberObject createdNumberObject = Instantiate(numberDataList[Random.Range(0, numberDataList.Count)].prefab);
 
             createdNumberObject.transform.parent = boardObject.transform;
@@ -48,7 +48,7 @@ public class BoardGeneratingManager : MonoBehaviour
         foreach (var boardObjectPair in boardObjectDict)
         {
             BoardObject boardObject = boardObjectPair.Value;
-            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.isOpen).ToList();
+            List<NumberData> numberDataList = numberDataHolder.numberDatas.numberDataList.Where(x => x.canBeCreated).ToList();
             AbstractBaseNumberObject createdNumberObject = Instantiate(numberDataList[Random.Range(0, numberDataList.Count)].prefab);
 
             createdNumberObject.transform.parent = boardObject.transform;

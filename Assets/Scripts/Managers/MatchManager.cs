@@ -30,13 +30,34 @@ public class MatchManager : MonoBehaviour
 
         numberList = numberList.OrderByDescending(number => number.Value).ToList();
 
-        for(int i = 0; i < numberList.Count; i++)
+
+        int rowCount = (int)Mathf.Sqrt(boardDictionary.Count);
+        int columnCount = rowCount;
+
+        for (int i = 0; i < rowCount; i++)
         {
-            AbstractBaseNumberObject numberObject = numberList[i];
-            BoardObject boardObject = boardDictionary.ElementAt(i).Value;
-            numberObject.transform.parent = boardObject.transform;
-            numberObject.transform.localPosition = Vector3.zero;
-            boardObject.NumberObject = numberObject;
+            if (i % 2 == 0)
+            {
+                for(int j = 0; j < columnCount; j++)
+                {
+                    AbstractBaseNumberObject numberObject = numberList[i * rowCount + j];
+                    BoardObject boardObject = boardDictionary[new Vector2Int(j, i)];
+                    numberObject.transform.parent = boardObject.transform;
+                    numberObject.PlayMovementAnimation(boardObject.transform, 0.1f);
+                    boardObject.NumberObject = numberObject;
+                }
+            }
+            else
+            {
+                for (int j = columnCount - 1; j >= 0; j--)
+                {
+                    AbstractBaseNumberObject numberObject = numberList[i * columnCount + (columnCount - 1 - j)];
+                    BoardObject boardObject = boardDictionary[new Vector2Int(j, i)];
+                    numberObject.transform.parent = boardObject.transform;
+                    numberObject.PlayMovementAnimation(boardObject.transform, 0.1f);
+                    boardObject.NumberObject = numberObject;
+                }
+            }
         }
     }
 }

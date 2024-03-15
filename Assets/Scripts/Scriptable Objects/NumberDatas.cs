@@ -15,5 +15,5 @@ public class NumberData
     public int minValue;
     public int maxValue;
     public AbstractBaseNumberObject prefab;
-    public bool isOpen;
+    public bool canBeCreated;
 }
