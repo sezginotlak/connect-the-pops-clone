@@ -18,4 +18,4 @@
 
 ## **DETAILS** 
 
-* Game saves can be deleted either from Menu/Save/Delete Save or by button on SaveManager Game Object's Inspector 
+* Game saves can be deleted either from Menu/Save/Delete Save or by button on SaveManager's Game Object's Inspector 
