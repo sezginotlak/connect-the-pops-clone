@@ -24,7 +24,7 @@ public class BoardGeneratingManager : MonoBehaviour
     private void Awake()
     {
         boardManager.onDictionaryFilled += FillBoard;
-        boardManager.onApplicationQuit += SaveGame;
+        boardManager.onApplicationQuitOrPaused += SaveGame;
         dropManager.onDropFinished += CreateNumbersForEmptyBoardObjects;
     }
 

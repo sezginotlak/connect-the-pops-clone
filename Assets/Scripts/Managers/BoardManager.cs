@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-    bool isDictionaryFilled;
     Dictionary<Vector2Int, BoardObject> boardDataDictionary;
     List<Vector2Int> neighbourDirectionList;
 
     [SerializeField] Transform boardParentObject;
 
     public Action<Dictionary<Vector2Int, BoardObject>> onDictionaryFilled;
-    public Action<Dictionary<Vector2Int, BoardObject>> onApplicationQuit;
+    public Action<Dictionary<Vector2Int, BoardObject>> onApplicationQuitOrPaused;
 
     private void Start()
     {
@@ -37,7 +36,6 @@ public class BoardManager : MonoBehaviour
 
     void FillBoardDataDictionary(Transform boardParentObject)
     {
-        isDictionaryFilled = false;
         boardDataDictionary = new Dictionary<Vector2Int, BoardObject>();
 
         int childCount = boardParentObject.childCount;
@@ -83,8 +81,14 @@ public class BoardManager : MonoBehaviour
         return boardDataDictionary;
     }
 
+    private void OnApplicationPause(bool pause)
+    {
+        if(pause)
+            onApplicationQuitOrPaused?.Invoke(GetBoardDataDictionary());
+    }
+
     private void OnApplicationQuit()
     {
-        onApplicationQuit?.Invoke(GetBoardDataDictionary());
+        onApplicationQuitOrPaused?.Invoke(GetBoardDataDictionary());
     }
 }
