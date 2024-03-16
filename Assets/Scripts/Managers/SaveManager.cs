@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -12,12 +14,9 @@ public class SaveManager : MonoBehaviour
     BoardGeneratingManager boardGeneratingManager;
 
     BoardSaveData saveData = new BoardSaveData();
-    string boardSavePath;
+    const string boardSavePath = "BoardSave";
 
-    private void Awake()
-    {
-        boardSavePath = Application.persistentDataPath + "BoardSave";
-    }
+    public string BoardSavePath { get => boardSavePath; }
 
     public void SaveBoard(Dictionary<Vector2Int, BoardObject> boardDictionary)
     {
@@ -29,12 +28,14 @@ public class SaveManager : MonoBehaviour
 
         saveData.savedNumberObjectList = numberObjectList;
 
-        SaveGame(boardSavePath, saveData);
+        string savePath = Application.persistentDataPath + BoardSavePath;
+        SaveGame(savePath, saveData);
     }
 
     public void LoadBoard(Dictionary<Vector2Int, BoardObject> boardDictionary)
     {
-        saveData = LoadGame(boardSavePath);
+        string savePath = Application.persistentDataPath + BoardSavePath;
+        saveData = LoadGame(savePath);
         List<int> numberObjectList = saveData.savedNumberObjectList;
 
         for (int i = 0; i < numberObjectList.Count; i++)
@@ -45,9 +46,31 @@ public class SaveManager : MonoBehaviour
 
     public bool IsBoardSaved()
     {
-        if (!File.Exists(boardSavePath)) return false;
+        string savePath = Application.persistentDataPath + BoardSavePath;
+
+        if (!File.Exists(savePath)) return false;
 
         return true;
+    }
+
+    public void DeleteSaveByInspectorButton()
+    {
+        string savePath = Application.persistentDataPath + BoardSavePath;
+
+        if (!File.Exists(savePath)) return;
+
+        File.Delete(savePath);
+    }
+
+    [MenuItem("Save/Delete Save")]
+    private static void DeleteSave(MenuCommand menuCommand)
+    {
+        SaveManager saveManager = FindObjectOfType<SaveManager>();
+        string savePath = Application.persistentDataPath + saveManager.BoardSavePath;
+
+        if (!File.Exists(savePath)) return;
+
+        File.Delete(savePath);
     }
 
     void SaveGame(string path, BoardSaveData boardSaveData)
@@ -64,13 +87,6 @@ public class SaveManager : MonoBehaviour
         string loadedData = File.ReadAllText(path);
         BoardSaveData boardSaveData = JsonUtility.FromJson<BoardSaveData>(loadedData);
         return boardSaveData;
-    }
-
-    void DeleteSave(string path)
-    {
-        if (!File.Exists(path)) return;
-
-        File.Delete(path);
     }
 }
 
