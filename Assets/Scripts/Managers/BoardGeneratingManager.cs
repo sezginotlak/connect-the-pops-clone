@@ -16,12 +16,33 @@ public class BoardGeneratingManager : MonoBehaviour
 
     [Inject]
     DropManager dropManager;
+
+    [Inject]
+    SaveManager saveManager;
     #endregion
 
     private void Awake()
     {
-        boardManager.onDictionaryFilled += CreateNumbersForAllBoardObjects;
+        boardManager.onDictionaryFilled += FillBoard;
+        boardManager.onApplicationQuit += SaveGame;
         dropManager.onDropFinished += CreateNumbersForEmptyBoardObjects;
+    }
+
+    void SaveGame(Dictionary<Vector2Int, BoardObject> boardObjectDict)
+    {
+        saveManager.SaveBoard(boardObjectDict);
+    }
+
+    void FillBoard(Dictionary<Vector2Int, BoardObject> boardObjectDict)
+    {
+        if (saveManager.IsBoardSaved())
+        {
+            saveManager.LoadBoard(boardObjectDict);
+        }
+        else
+        {
+            CreateNumbersForAllBoardObjects(boardObjectDict);
+        }
     }
 
     void CreateNumbersForEmptyBoardObjects(Dictionary<Vector2Int, BoardObject> boardObjectDict)
@@ -55,5 +76,15 @@ public class BoardGeneratingManager : MonoBehaviour
             createdNumberObject.transform.localPosition = Vector3.zero;
             boardObject.NumberObject = createdNumberObject;
         }
+    }
+
+    public void CreateNumberObject(BoardObject boardObject, int value)
+    {
+        AbstractBaseNumberObject prefab = numberDataHolder.numberDatas.numberDataList.Where(x => value >= x.minValue && value < x.maxValue).FirstOrDefault().prefab;
+        AbstractBaseNumberObject createdNumberObject = Instantiate(prefab);
+
+        createdNumberObject.transform.parent = boardObject.transform;
+        createdNumberObject.transform.localPosition = Vector3.zero;
+        boardObject.NumberObject = createdNumberObject;
     }
 }

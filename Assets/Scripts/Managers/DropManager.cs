@@ -20,17 +20,17 @@ public class DropManager : MonoBehaviour
     {
         int rowCount = (int)Mathf.Sqrt(boardDictionary.Count); //used this because we already know board is square
         int columnCount = rowCount;
-        for(int i = 0; i < rowCount; i++)
+        for(int rowIndex = 0; rowIndex < rowCount; rowIndex++)
         {
-            for (int k = 0; k < columnCount - 1; k++) // 1den fazla boþluk olduðunda boþ kalan yer oluyordu
+            for (int columnIterateCount = 0; columnIterateCount < columnCount - 1; columnIterateCount++) // iterates column about row count to make sure there is no null board object
             {
-                for (int j = 0; j < columnCount - 1; j++)
+                for (int columnIndex = 0; columnIndex < columnCount - 1; columnIndex++)
                 {
-                    BoardObject currentBoardObject = boardDictionary[new Vector2Int(i, j)];
+                    BoardObject currentBoardObject = boardDictionary[new Vector2Int(rowIndex, columnIndex)];
 
                     if (currentBoardObject.NumberObject != null) continue;
 
-                    BoardObject nextBoardObject = boardDictionary[new Vector2Int(i, j + 1)];
+                    BoardObject nextBoardObject = boardDictionary[new Vector2Int(rowIndex, columnIndex + 1)];
 
                     if (nextBoardObject.NumberObject == null) continue;
 

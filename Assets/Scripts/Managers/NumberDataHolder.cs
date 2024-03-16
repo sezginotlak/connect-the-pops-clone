@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class NumberDataHolder : MonoBehaviour
 {
-    public NumberDatas numberDatas;
+    public NumberDataSO numberDatas;
 }

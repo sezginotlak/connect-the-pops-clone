@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/NumberDatasSO", order = 1)]
-public class NumberDatas : ScriptableObject
+public class NumberDataSO : ScriptableObject
 {
     public List<NumberData> numberDataList = new List<NumberData>();
 }

@@ -30,18 +30,20 @@ public class MatchManager : MonoBehaviour
 
         numberList = numberList.OrderByDescending(number => number.Value).ToList();
 
-
         int rowCount = (int)Mathf.Sqrt(boardDictionary.Count);
         int columnCount = rowCount;
 
-        for (int i = 0; i < rowCount; i++)
+        // iterates the list left to right if rowIndex is even, otherwise right to left
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
         {
-            if (i % 2 == 0)
+            int currentRow = rowIndex * rowCount; // to access numberList start index for different rows
+            if (rowIndex % 2 == 0)
             {
-                for(int j = 0; j < columnCount; j++)
+                for(int columnIndex = 0; columnIndex < columnCount; columnIndex++)
                 {
-                    AbstractBaseNumberObject numberObject = numberList[i * rowCount + j];
-                    BoardObject boardObject = boardDictionary[new Vector2Int(j, i)];
+                    int numberObjectIndex = currentRow + columnIndex;
+                    AbstractBaseNumberObject numberObject = numberList[numberObjectIndex];
+                    BoardObject boardObject = boardDictionary[new Vector2Int(columnIndex, rowIndex)];
                     numberObject.transform.parent = boardObject.transform;
                     numberObject.PlayMovementAnimation(boardObject.transform, 0.1f);
                     boardObject.NumberObject = numberObject;
@@ -49,10 +51,13 @@ public class MatchManager : MonoBehaviour
             }
             else
             {
-                for (int j = columnCount - 1; j >= 0; j--)
+                int maxColumnIndex = columnCount - 1;
+                for (int columnIndex = maxColumnIndex; columnIndex >= 0; columnIndex--)
                 {
-                    AbstractBaseNumberObject numberObject = numberList[i * columnCount + (columnCount - 1 - j)];
-                    BoardObject boardObject = boardDictionary[new Vector2Int(j, i)];
+                    int toBeAddedColumnIndex = maxColumnIndex - columnIndex;
+                    int numberObjectIndex = currentRow + toBeAddedColumnIndex;
+                    AbstractBaseNumberObject numberObject = numberList[numberObjectIndex];
+                    BoardObject boardObject = boardDictionary[new Vector2Int(columnIndex, rowIndex)];
                     numberObject.transform.parent = boardObject.transform;
                     numberObject.PlayMovementAnimation(boardObject.transform, 0.1f);
                     boardObject.NumberObject = numberObject;

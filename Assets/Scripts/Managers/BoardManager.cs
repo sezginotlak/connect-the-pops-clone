@@ -12,6 +12,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Transform boardParentObject;
 
     public Action<Dictionary<Vector2Int, BoardObject>> onDictionaryFilled;
+    public Action<Dictionary<Vector2Int, BoardObject>> onApplicationQuit;
 
     private void Start()
     {
@@ -36,17 +37,12 @@ public class BoardManager : MonoBehaviour
 
     void FillBoardDataDictionary(Transform boardParentObject)
     {
-        StartCoroutine(IEFillBoardDataDictionary(boardParentObject));
-    }
-
-    IEnumerator IEFillBoardDataDictionary(Transform boardParentObject)
-    {
         isDictionaryFilled = false;
         boardDataDictionary = new Dictionary<Vector2Int, BoardObject>();
 
         int childCount = boardParentObject.childCount;
 
-        for(int i = 0; i < childCount; i++)
+        for (int i = 0; i < childCount; i++)
         {
             boardParentObject.GetChild(i).TryGetComponent(out BoardObject boardObject);
 
@@ -55,16 +51,7 @@ public class BoardManager : MonoBehaviour
             boardDataDictionary.Add(boardObject.boardPosition, boardObject);
         }
 
-        isDictionaryFilled = true;
-
-        yield return new WaitUntil(IsDictionaryFilled);
-
         onDictionaryFilled?.Invoke(boardDataDictionary);
-    }
-
-    bool IsDictionaryFilled()
-    {
-        return isDictionaryFilled;
     }
 
     public BoardObject GetBoardObject(Vector2Int boardPosition)
@@ -94,5 +81,10 @@ public class BoardManager : MonoBehaviour
     public Dictionary<Vector2Int, BoardObject> GetBoardDataDictionary()
     {
         return boardDataDictionary;
+    }
+
+    private void OnApplicationQuit()
+    {
+        onApplicationQuit?.Invoke(GetBoardDataDictionary());
     }
 }

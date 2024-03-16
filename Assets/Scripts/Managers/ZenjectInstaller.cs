@@ -20,6 +20,8 @@ public class ZenjectInstaller : MonoInstaller
     DropManager dropManager;
     [SerializeField]
     LinkManager linkManager;
+    [SerializeField]
+    SaveManager saveManager;
 
     public override void InstallBindings()
     {
@@ -30,5 +32,6 @@ public class ZenjectInstaller : MonoInstaller
         Container.Bind<LineRendererManager>().FromComponentOn(lineRendererManager.gameObject).AsSingle();
         Container.Bind<DropManager>().FromComponentOn(dropManager.gameObject).AsSingle();
         Container.Bind<LinkManager>().FromComponentOn(linkManager.gameObject).AsSingle();
+        Container.Bind<SaveManager>().FromComponentOn(saveManager.gameObject).AsSingle();
     }
 }

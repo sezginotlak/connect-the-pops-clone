@@ -9,20 +9,17 @@ public abstract class AbstractBaseNumberObject : MonoBehaviour
     int value;
 
     [SerializeField]
+    Color color;
+
+    [SerializeField]
     float squishYPos = -0.03f;
 
     [SerializeField]
     float squishYScale = 0.94f;
 
     public int Value { get => value; }
-    public Color Color { get; set; }
+    public Color Color { get => color; }
 
-    private void Start()
-    {
-        Color = GetComponent<SpriteRenderer>().color;    
-    }
-
-    // moves the number object to target point
     public void PlayMergeAnimation(Transform targetPoint, float duration)
     {
         transform.DOMove(targetPoint.position, duration).OnComplete(() => 
