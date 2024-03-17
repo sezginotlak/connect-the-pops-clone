@@ -62,17 +62,6 @@ public class SaveManager : MonoBehaviour
         File.Delete(savePath);
     }
 
-    [MenuItem("Save/Delete Save")]
-    private static void DeleteSave(MenuCommand menuCommand)
-    {
-        SaveManager saveManager = FindObjectOfType<SaveManager>();
-        string savePath = Application.persistentDataPath + saveManager.BoardSavePath;
-
-        if (!File.Exists(savePath)) return;
-
-        File.Delete(savePath);
-    }
-
     void SaveGame(string path, BoardSaveData boardSaveData)
     {
         string saveData = JsonUtility.ToJson(boardSaveData);
